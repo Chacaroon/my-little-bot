@@ -1,14 +1,23 @@
 import Koa from 'koa'
 import compose from 'koa-compose'
 import logger from 'koa-logger'
+import bodyParser from 'koa-bodyparser'
 
 import router from './router'
 
 const app = new Koa()
 
-const middleware = [
-	logger()
-]
+let middleware
+
+if (process.env.NODE_ENV === 'development') {
+	middleware = [
+		logger()
+	]
+} else {
+	middleware = [
+		bodyParser()
+	]
+}
 
 app
 	.use(compose(middleware))
