@@ -1,5 +1,6 @@
 function* index(){
-	yield console.log('index') //eslint-disable-line
+    console.log('index') //eslint-disable-line
+	yield this.send('asdasd')
 }
 
 export default [
