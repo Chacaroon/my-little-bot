@@ -20,8 +20,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var app = new _koa2.default();
 
-var middlewareStack = [_koaLogger2.default];
+var middleware = [(0, _koaLogger2.default)()];
 
-app.use((0, _koaCompose2.default)(middlewareStack)).use(_router2.default.routes()).use(_router2.default.allowedMethods());
+app.use((0, _koaCompose2.default)(middleware)).use(_router2.default.routes()).use(_router2.default.allowedMethods());
 
 app.listen(3000);
