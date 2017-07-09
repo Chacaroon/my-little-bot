@@ -8,10 +8,6 @@ var _koaCompose = require('koa-compose');
 
 var _koaCompose2 = _interopRequireDefault(_koaCompose);
 
-var _koaLogger = require('koa-logger');
-
-var _koaLogger2 = _interopRequireDefault(_koaLogger);
-
 var _koaBodyparser = require('koa-bodyparser');
 
 var _koaBodyparser2 = _interopRequireDefault(_koaBodyparser);
@@ -29,7 +25,7 @@ var middleware = void 0;
 console.log(process.env.NODE_ENV); //eslint-disable-line
 
 if (process.env.NODE_ENV !== 'production') {
-	middleware = [(0, _koaLogger2.default)()];
+	middleware = [require('koa-logger')()];
 } else {
 	middleware = [(0, _koaBodyparser2.default)()];
 }

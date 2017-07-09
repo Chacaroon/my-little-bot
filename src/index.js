@@ -1,6 +1,5 @@
 import Koa from 'koa'
 import compose from 'koa-compose'
-import logger from 'koa-logger'
 import bodyParser from 'koa-bodyparser'
 
 import router from './router'
@@ -13,7 +12,7 @@ console.log(process.env.NODE_ENV) //eslint-disable-line
 
 if (process.env.NODE_ENV !== 'production') {
 	middleware = [
-		logger()
+		require('koa-logger')()
 	]
 } else {
 	middleware = [
