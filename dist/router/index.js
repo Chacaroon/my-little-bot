@@ -1,7 +1,7 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
 
 var _koaRouter = require('koa-router');
@@ -16,12 +16,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var router = new _koaRouter2.default();
 
-function loadRoutes(obj, routes) {
-	routes.forEach(function (val) {
-		return (obj[val.method.toLowerCase()] || obj.get).call(obj, val.name, val.url, val.middleware);
-	});
-}
-
-loadRoutes(router, _home2.default);
+router.get('/', _home2.default);
 
 exports.default = router;

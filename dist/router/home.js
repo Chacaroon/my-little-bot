@@ -3,24 +3,22 @@
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
+exports.default = _callee;
 
-var _marked = [index].map(regeneratorRuntime.mark);
+var _marked = [_callee].map(regeneratorRuntime.mark);
 
-function index() {
-	return regeneratorRuntime.wrap(function index$(_context) {
+function _callee() {
+	return regeneratorRuntime.wrap(function _callee$(_context) {
 		while (1) {
 			switch (_context.prev = _context.next) {
 				case 0:
-					console.log('index'); //eslint-disable-line
-					_context.next = 3;
-					return this.send('asdasd');
+					_context.next = 2;
+					return this.send('fjsdklfjl');
 
-				case 3:
+				case 2:
 				case 'end':
 					return _context.stop();
 			}
 		}
 	}, _marked[0], this);
 }
-
-exports.default = [{ method: 'get', name: 'index', url: '/', middleware: index }];

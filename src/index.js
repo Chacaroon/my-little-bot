@@ -6,9 +6,13 @@ import router from './router'
 
 const app = new Koa()
 
-const middlewareStack = [
-	logger
+const middleware = [
+	logger()
 ]
 
-app.use(compose(middlewareStack))
-app.use(router.middleware())
+app
+	.use(compose(middleware))
+	.use(router.routes())
+	.use(router.allowedMethods())
+
+app.listen(3000)

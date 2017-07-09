@@ -1,14 +1,13 @@
 import Router from 'koa-router'
-import routes from './home'
+
+import home from './home'
+import {webhookGet, webhookPost} from './webhook'
 
 const router = new Router()
 
-function loadRoutes(obj, routes){
-	routes.forEach((val) => {
-		return (obj[val.method.toLowerCase()] || obj.get).call(obj, val.name, val.url, val.middleware)
-	})
-}
-
-loadRoutes(router, routes)
+router
+	.get('/', home)
+	.get('/webhook', webhookGet)
+	.post('/webhook', webhookPost)
 
 export default router

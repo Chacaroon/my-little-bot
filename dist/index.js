@@ -22,5 +22,6 @@ var app = new _koa2.default();
 
 var middlewareStack = [_koaLogger2.default];
 
-app.use((0, _koaCompose2.default)(middlewareStack));
-app.use(_router2.default.middleware());
+app.use((0, _koaCompose2.default)(middlewareStack)).use(_router2.default.routes()).use(_router2.default.allowedMethods());
+
+app.listen(3000);
