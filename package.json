@@ -18,6 +18,10 @@
   "scripts": {
     "start": "eslint src/** && nodemon src/index.js --exec babel-node"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/chacaroon/my-litte-bot.git"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC"
