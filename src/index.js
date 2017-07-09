@@ -9,7 +9,9 @@ const app = new Koa()
 
 let middleware
 
-if (process.env.NODE_ENV === 'development') {
+console.log(process.env.NODE_ENV) //eslint-disable-line
+
+if (process.env.NODE_ENV !== 'production') {
 	middleware = [
 		logger()
 	]

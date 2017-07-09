@@ -26,7 +26,9 @@ var app = new _koa2.default();
 
 var middleware = void 0;
 
-if (process.env.NODE_ENV === 'development') {
+console.log(process.env.NODE_ENV); //eslint-disable-line
+
+if (process.env.NODE_ENV !== 'production') {
 	middleware = [(0, _koaLogger2.default)()];
 } else {
 	middleware = [(0, _koaBodyparser2.default)()];
