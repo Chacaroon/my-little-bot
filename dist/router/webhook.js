@@ -45,9 +45,9 @@ function sendMessage(sender, message) {
 			id: sender
 		},
 		message: message
-	}).catch(function (err) {
+	}).end(function (err) {
 		if (err) {
-			console.log('Error sending message: ', err); //eslint-disable-line
+			console.error(err); //eslint-disable-line
 		}
 	});
 }

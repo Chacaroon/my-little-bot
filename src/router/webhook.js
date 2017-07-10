@@ -39,9 +39,9 @@ function sendMessage(sender, message) {
 			},
 			message: message
 		})
-		.catch((err) => {
+		.end((err) => {
 			if (err) {
-                console.log('Error sending message: ', err) //eslint-disable-line
+                console.error(err) //eslint-disable-line
 			}
 		})
 }
