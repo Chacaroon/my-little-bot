@@ -16,6 +16,9 @@ var verifyToken = 'MY_SECRET_TOKEN';
 var pageToken = '79f2fea44c74260c853632a5b6e414ca';
 
 function webhookGet(ctx) {
+
+	console.dir(ctx.request); //eslint-disable-line
+
 	if (ctx.request.query['hub.challenge'] === verifyToken) {
 		ctx.body = ctx.request.query['hub.challenge'];
 	}
