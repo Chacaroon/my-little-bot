@@ -1,4 +1,4 @@
-import request from 'request'
+import request from 'superagent'
 
 const verify_token = 'MY_SECRET_TOKEN'
 const access_token = 'EAAGZB1XwCVe4BAMtuKDL0EfRJD5zGFHdb1tiAz8lxIk7sFDdIsaCrpZB4J27tyTMjmgNMolC4Ux3ashemuZCGcHd2GyKg6wG1OxnS0sxyxJVpVzuuXHUkRj9LfXPpxiZBv7m0VlVcq8QlVpjaJPa8VBRFDwLf7ABrylXkdunJgZDZD'

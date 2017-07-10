@@ -6,9 +6,9 @@ Object.defineProperty(exports, "__esModule", {
 exports.webhookGet = webhookGet;
 exports.webhookPost = webhookPost;
 
-var _request = require('request');
+var _superagent = require('superagent');
 
-var _request2 = _interopRequireDefault(_request);
+var _superagent2 = _interopRequireDefault(_superagent);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -49,7 +49,7 @@ function webhookPost(ctx) {
 }
 
 function sendMessage(sender, message) {
-	_request2.default.post('https://graph.facebook.com/v2.9/me/messages').query({ access_token: access_token }).send({
+	_superagent2.default.post('https://graph.facebook.com/v2.9/me/messages').query({ access_token: access_token }).send({
 		recipient: {
 			id: sender
 		},
