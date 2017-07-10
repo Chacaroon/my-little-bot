@@ -1,3 +1,3 @@
-export default async function (ctx) {
-	await ctx.render('index')
+export default function (ctx) {
+	ctx.render('index')
 }
