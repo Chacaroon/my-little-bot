@@ -20,14 +20,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var app = new _koa2.default();
 
-var middleware = void 0;
-
-console.log(process.env.NODE_ENV); //eslint-disable-line
+var middleware = [(0, _koaBodyparser2.default)()];
 
 if (process.env.NODE_ENV !== 'production') {
-	middleware = [require('koa-logger')()];
-} else {
-	middleware = [(0, _koaBodyparser2.default)()];
+	middleware.push(require('koa-logger')());
 }
 
 app.use((0, _koaCompose2.default)(middleware)).use(_router2.default.routes()).use(_router2.default.allowedMethods());

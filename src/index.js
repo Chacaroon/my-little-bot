@@ -6,18 +6,12 @@ import router from './router'
 
 const app = new Koa()
 
-let middleware
-
-console.log(process.env.NODE_ENV) //eslint-disable-line
+let middleware = [
+	bodyParser()
+]
 
 if (process.env.NODE_ENV !== 'production') {
-	middleware = [
-		require('koa-logger')()
-	]
-} else {
-	middleware = [
-		bodyParser()
-	]
+	middleware.push(require('koa-logger')())
 }
 
 app
