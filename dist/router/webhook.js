@@ -13,7 +13,7 @@ var _superagent2 = _interopRequireDefault(_superagent);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var verify_token = 'MY_SECRET_TOKEN';
-var access_token = 'EAACEdEose0cBAIE0QpMSXOQyd8REzlaOH9VwDQWLKURUjtc4gOvKl3ziZAjfCePemOH9WKqNv3wULJQeA1Q6XwaUddjcTVmkRTqTGTyJZBg2ZB8Cqv6WkbwBcGqzHZCLSHkUvmZBJGoBHFHyZAoZBGtCAF6sHOI46MQvumlZAgtM37uOLQKO9ZBnNtleRsR9BS31wHBLUXZBFflAZDZD';
+var access_token = 'EAAGZB1XwCVe4BAGZAjRVOSwhb5lfZCcMZC2RuzZAu9RMkcZAcFDIu83VcOVsyi6Ajq3yBZC5aqDTIZCzDGYnTeR8LtncJ35nqZCmLCKfrKZBiMMJZAgj96SHsfaMKvVT0sOjp2ZATKP1NHWWFgAsz8jZCWPUW359Lc1NAvaHHTZBcEYnvLbAZDZD';
 
 function webhookGet(ctx) {
 
