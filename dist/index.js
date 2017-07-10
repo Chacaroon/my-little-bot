@@ -12,6 +12,10 @@ var _koaBodyparser = require('koa-bodyparser');
 
 var _koaBodyparser2 = _interopRequireDefault(_koaBodyparser);
 
+var _koaViews = require('koa-views');
+
+var _koaViews2 = _interopRequireDefault(_koaViews);
+
 var _router = require('./router');
 
 var _router2 = _interopRequireDefault(_router);
@@ -20,7 +24,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var app = new _koa2.default();
 
-var middleware = [(0, _koaBodyparser2.default)()];
+var middleware = [(0, _koaBodyparser2.default)(), (0, _koaViews2.default)('./dist/views/pages')];
 
 if (process.env.NODE_ENV !== 'production') {
 	middleware.push(require('koa-logger')());

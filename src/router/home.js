@@ -1,3 +1,3 @@
-export default function (ctx) {
-	ctx.body = 'fjdsklf'
+export default async function (ctx) {
+	await ctx.render('index')
 }

@@ -13,7 +13,7 @@ var _request2 = _interopRequireDefault(_request);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var verify_token = 'MY_SECRET_TOKEN';
-var pageToken = '79f2fea44c74260c853632a5b6e414ca';
+var access_token = 'EAAGZB1XwCVe4BAMtuKDL0EfRJD5zGFHdb1tiAz8lxIk7sFDdIsaCrpZB4J27tyTMjmgNMolC4Ux3ashemuZCGcHd2GyKg6wG1OxnS0sxyxJVpVzuuXHUkRj9LfXPpxiZBv7m0VlVcq8QlVpjaJPa8VBRFDwLf7ABrylXkdunJgZDZD';
 
 function webhookGet(ctx) {
 
@@ -49,7 +49,7 @@ function webhookPost(ctx) {
 }
 
 function sendMessage(sender, message) {
-	_request2.default.post('https://graph.facebook.com/v2.6/me/messages').query({ access_token: pageToken }).send({
+	_request2.default.post('https://graph.facebook.com/v2.9/me/messages').query({ access_token: access_token }).send({
 		recipient: {
 			id: sender
 		},

@@ -1,7 +1,7 @@
 import request from 'request'
 
 const verify_token = 'MY_SECRET_TOKEN'
-const pageToken = '79f2fea44c74260c853632a5b6e414ca'
+const access_token = 'EAAGZB1XwCVe4BAMtuKDL0EfRJD5zGFHdb1tiAz8lxIk7sFDdIsaCrpZB4J27tyTMjmgNMolC4Ux3ashemuZCGcHd2GyKg6wG1OxnS0sxyxJVpVzuuXHUkRj9LfXPpxiZBv7m0VlVcq8QlVpjaJPa8VBRFDwLf7ABrylXkdunJgZDZD'
 
 export function webhookGet(ctx) {
 
@@ -39,8 +39,8 @@ export function webhookPost(ctx) {
 
 function sendMessage (sender, message) {
 	request
-		.post('https://graph.facebook.com/v2.6/me/messages')
-		.query({access_token: pageToken})
+		.post('https://graph.facebook.com/v2.9/me/messages')
+		.query({access_token: access_token})
 		.send({
 			recipient: {
 				id: sender
