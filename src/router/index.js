@@ -34,8 +34,9 @@ router
 
 		client.put(0, 0, 60, JSON.stringify(['messenger-messages', job]), (err) => {
 			if (err) console.error(err)
-			ctx.status = 200
 		})
+
+		ctx.status = 200
 	})
 
 export default router
