@@ -30,7 +30,7 @@
     "start": "node ./dist/index.js",
     "worker": "node ./dist/worker.js",
     "watch": "nodemon src/index.js --exec babel-node",
-    "build": "babel src --out-dir dist"
+    "build": "eslint src/** && babel src --out-dir dist"
   },
   "repository": {
     "type": "git",

@@ -38,13 +38,15 @@ var MessageHandler = function () {
 	}, {
 		key: 'work',
 		value: function work(payload, cb) {
-			// payload.messagingEvents.map((event) => {
-			// 	const sender = event.sender.id
-			// 	const text   = event.message.text.trim().substring(0, 200)
-			// 	this.sendMessage(sender, {
-			// 		text: 'Text received, echo: ' + text
-			// 	})
-			// })
+			var _this = this;
+
+			payload.messagingEvents.map(function (event) {
+				var sender = event.sender.id;
+				var text = event.message.text.trim().substring(0, 200);
+				_this.sendMessage(sender, {
+					text: 'Text received, echo: ' + text
+				});
+			});
 
 			console.log(payload);
 			cb('success');
