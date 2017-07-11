@@ -1,15 +1,13 @@
 import Koa from 'koa'
 import compose from 'koa-compose'
 import bodyParser from 'koa-bodyparser'
-import views from 'koa-views'
 
 import router from './router'
 
 const app = new Koa()
 
 let middleware = [
-	bodyParser(),
-	views('./dist/views/pages')
+	bodyParser()
 ]
 
 if (process.env.NODE_ENV !== 'production') {
