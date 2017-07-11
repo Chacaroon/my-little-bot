@@ -22,21 +22,6 @@ var MessageHandler = function () {
 	}
 
 	_createClass(MessageHandler, [{
-		key: 'webhookPost',
-		value: function webhookPost(ctx) {
-			var _this = this;
-
-			var messagingEvents = ctx.request.body.entry[0].messaging;
-
-			messagingEvents.map(function (event) {
-				var sender = event.sender.id;
-				var text = event.message.text.trim().substring(0, 200);
-				_this.sendMessage(sender, {
-					text: 'Text received, echo: ' + text
-				});
-			});
-		}
-	}, {
 		key: 'sendMessage',
 		value: function sendMessage(sender, message) {
 			_superagent2.default.post('https://graph.facebook.com/v2.9/me/messages').query({ access_token: access_token }).send({
@@ -53,7 +38,15 @@ var MessageHandler = function () {
 	}, {
 		key: 'work',
 		value: function work(payload, cb) {
-			this.webhookPost(payload.ctx);
+			// payload.messagingEvents.map((event) => {
+			// 	const sender = event.sender.id
+			// 	const text   = event.message.text.trim().substring(0, 200)
+			// 	this.sendMessage(sender, {
+			// 		text: 'Text received, echo: ' + text
+			// 	})
+			// })
+
+			console.log(payload);
 			cb('success');
 		}
 	}]);

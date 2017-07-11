@@ -30,17 +30,20 @@ client.on('connect', function () {
 	console.log('...Closing the tube...');
 }).connect();
 
-router.get('/webhook/', _webhook.webhookGet).post('/webhook/', function (ctx) {
+router.get('/webhook', _webhook.webhookGet).post('/webhook', function (ctx) {
 
 	var job = {
 		type: 'messenger-messages',
 		payload: {
-			ctx: ctx
+			// messagingEvents: ctx.request.body.entry[0].messaging
+			lol: 'lol'
 		}
 	};
 
 	client.put(0, 0, 60, JSON.stringify(['messenger-messages', job]), function (err) {
 		if (err) console.error(err);
+
+		console.log('lol');
 	});
 
 	ctx.status = 200;

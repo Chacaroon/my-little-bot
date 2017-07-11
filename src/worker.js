@@ -8,18 +8,6 @@ class MessageHandler {
 		this.type = 'messenger-messages'
 	}
 
-	webhookPost(ctx) {
-		const messagingEvents = ctx.request.body.entry[0].messaging
-
-		messagingEvents.map((event) => {
-			const sender = event.sender.id
-			const text   = event.message.text.trim().substring(0, 200)
-			this.sendMessage(sender, {
-				text: 'Text received, echo: ' + text
-			})
-		})
-	}
-
 	sendMessage(sender, message) {
 		request
 			.post('https://graph.facebook.com/v2.9/me/messages')
@@ -38,7 +26,15 @@ class MessageHandler {
 	}
 
 	work(payload, cb) {
-		this.webhookPost(payload.ctx)
+		payload.messagingEvents.map((event) => {
+			const sender = event.sender.id
+			const text   = event.message.text.trim().substring(0, 200)
+			this.sendMessage(sender, {
+				text: 'Text received, echo: ' + text
+			})
+		})
+
+		console.log(payload)
 		cb('success')
 	}
 }

@@ -22,13 +22,13 @@ client
 	.connect()
 
 router
-	.get('/webhook/', webhookGet)
-	.post('/webhook/', (ctx) => {
+	.get('/webhook', webhookGet)
+	.post('/webhook', (ctx) => {
 
 		const job = {
 			type: 'messenger-messages',
 			payload: {
-				ctx: ctx
+				messagingEvents: ctx.request.body.entry[0].messaging
 			}
 		}
 
