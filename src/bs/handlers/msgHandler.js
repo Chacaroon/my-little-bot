@@ -47,6 +47,8 @@ class MessageHandler {
 
 		let senderId
 
+		console.dir(payload.messagingEvents) //eslint-disable-line
+
 		payload.messagingEvents.map((event) => {
 			senderId = event.sender.id
 			const text   = event.message.text.trim().substring(0, 200)
