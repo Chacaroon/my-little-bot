@@ -25,7 +25,22 @@ class MessageHandler {
 			})
 	}
 
-	pushUserToDB(id, first_name, last_name) {
+	pushUserToDB(id) {
+
+		let first_name, last_name
+
+		request
+			.get(`https://graph.facebook.com/v2.9/${id}`)
+			.query({fields: 'first_name,last_name'})
+			.end((err, req) => {
+				if (err) {
+					console.error(err)
+				} else {
+					first_name = req.first_name
+					last_name = req.last_name
+				}
+			})
+
 		connection.collection('users').findOne({id: id}, (err, user) => {
 			if (err) {
 				console.error(err)
@@ -47,28 +62,21 @@ class MessageHandler {
 
 		payload.messagingEvents.map((event) => {
 			const senderId = event.sender.id
-			const text   = event.message.text.trim().substring(0, 200)
-			this.sendMessage(senderId, {
-				text: `Text received: ${text}`
-			})
+			const text   = event.message.text.trim()
 
-			console.log(senderId)
+			switch (text) {
+			case /\/add \d+/: {
+				const id = text.split(' ')[1]
+				this.pushUserToDB(id)
+				break
+			}
+			default: {
+				this.sendMessage(senderId, {
+					text: `Text received: ${text}`
+				})
+			}
+			}
 		})
-
-		// const id = payload.id
-		//
-		// request
-		// 	.get(`https://graph.facebook.com/v2.9/${id}`)
-		// 	.query({fields: 'first_name,last_name'})
-		// 	.end((err, res) => {
-		// 		if (err) {
-		// 			console.error(err)
-		// 		} else {
-		// 			const {first_name, last_name} = res
-		//
-		// 			this.pushUserToDB(id, first_name, last_name)
-		// 		}
-		// 	})
 
 		cb('success')
 	}

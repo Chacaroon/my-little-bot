@@ -45,7 +45,20 @@ var MessageHandler = function () {
 		}
 	}, {
 		key: 'pushUserToDB',
-		value: function pushUserToDB(id, first_name, last_name) {
+		value: function pushUserToDB(id) {
+
+			var first_name = void 0,
+			    last_name = void 0;
+
+			_superagent2.default.get('https://graph.facebook.com/v2.9/' + id).query({ fields: 'first_name,last_name' }).end(function (err, req) {
+				if (err) {
+					console.error(err);
+				} else {
+					first_name = req.first_name;
+					last_name = req.last_name;
+				}
+			});
+
 			_mongoose.connection.collection('users').findOne({ id: id }, function (err, user) {
 				if (err) {
 					console.error(err);
@@ -69,28 +82,23 @@ var MessageHandler = function () {
 
 			payload.messagingEvents.map(function (event) {
 				var senderId = event.sender.id;
-				var text = event.message.text.trim().substring(0, 200);
-				_this.sendMessage(senderId, {
-					text: 'Text received: ' + text
-				});
+				var text = event.message.text.trim();
 
-				console.log(senderId);
+				switch (text) {
+					case /\/add \d+/:
+						{
+							var id = text.split(' ')[1];
+							_this.pushUserToDB(id);
+							break;
+						}
+					default:
+						{
+							_this.sendMessage(senderId, {
+								text: 'Text received: ' + text
+							});
+						}
+				}
 			});
-
-			// const id = payload.id
-			//
-			// request
-			// 	.get(`https://graph.facebook.com/v2.9/${id}`)
-			// 	.query({fields: 'first_name,last_name'})
-			// 	.end((err, res) => {
-			// 		if (err) {
-			// 			console.error(err)
-			// 		} else {
-			// 			const {first_name, last_name} = res
-			//
-			// 			this.pushUserToDB(id, first_name, last_name)
-			// 		}
-			// 	})
 
 			cb('success');
 		}
