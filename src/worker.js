@@ -18,7 +18,6 @@ class MessageHandler {
 				text: 'Text received, echo: ' + text
 			})
 		})
-		ctx.status = 200
 	}
 
 	sendMessage(sender, message) {

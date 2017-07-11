@@ -41,6 +41,7 @@ router.get('/webhook/', _webhook.webhookGet).post('/webhook/', function (ctx) {
 
 	client.put(0, 0, 60, JSON.stringify(['messenger-messages', job]), function (err) {
 		if (err) console.error(err);
+		ctx.status = 200;
 	});
 });
 
