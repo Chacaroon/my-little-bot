@@ -67,24 +67,25 @@ var MessageHandler = function () {
 		value: function work(payload, cb) {
 			var _this = this;
 
+			var senderId = void 0;
+
 			payload.messagingEvents.map(function (event) {
-				var sender = event.sender.id;
+				senderId = event.sender.id;
 				var text = event.message.text.trim().substring(0, 200);
-				_this.sendMessage(sender, {
+				_this.sendMessage(senderId, {
 					text: 'Text received: ' + text
 				});
 			});
 
-			_superagent2.default.get('https://graph.facebook.com/v2.9/me').query({ fields: 'first_name,last_name,id' }).end(function (err, req) {
+			_superagent2.default.get('https://graph.facebook.com/v2.9/' + senderId).query({ fields: 'first_name,last_name' }).end(function (err) {
 				if (err) {
 					console.error(err);
 				} else {
-					var id = req.id,
-					    first_name = req.first_name,
-					    last_name = req.last_name;
+					// const {first_name, last_name} = req
+					//
+					// this.pushUserToDB(senderId, first_name, last_name)
 
-
-					_this.pushUserToDB(id, first_name, last_name);
+					console.log('test');
 				}
 			});
 
