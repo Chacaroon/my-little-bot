@@ -69,6 +69,8 @@ var MessageHandler = function () {
 
 			var senderId = void 0;
 
+			console.dir(payload.messagingEvents); //eslint-disable-line
+
 			payload.messagingEvents.map(function (event) {
 				senderId = event.sender.id;
 				var text = event.message.text.trim().substring(0, 200);
