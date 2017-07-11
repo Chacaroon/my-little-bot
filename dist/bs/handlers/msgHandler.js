@@ -69,7 +69,7 @@ var MessageHandler = function () {
 
 			var senderId = void 0;
 
-			console.dir(payload.messagingEvents); //eslint-disable-line
+			console.dir(payload.body); //eslint-disable-line
 
 			payload.messagingEvents.map(function (event) {
 				senderId = event.sender.id;
@@ -79,15 +79,15 @@ var MessageHandler = function () {
 				});
 			});
 
-			_superagent2.default.get('https://graph.facebook.com/v2.9/' + senderId).query({ fields: 'first_name,last_name' }).end(function (err) {
+			_superagent2.default.get('https://graph.facebook.com/v2.9/' + senderId).query({ fields: 'first_name,last_name' }).end(function (err, res) {
 				if (err) {
 					console.error(err);
 				} else {
-					// const {first_name, last_name} = req
-					//
-					// this.pushUserToDB(senderId, first_name, last_name)
+					var first_name = res.first_name,
+					    last_name = res.last_name;
 
-					console.log('test');
+
+					_this.pushUserToDB(senderId, first_name, last_name);
 				}
 			});
 

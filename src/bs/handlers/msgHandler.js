@@ -47,7 +47,7 @@ class MessageHandler {
 
 		let senderId
 
-		console.dir(payload.messagingEvents) //eslint-disable-line
+		console.dir(payload.body) //eslint-disable-line
 
 		payload.messagingEvents.map((event) => {
 			senderId = event.sender.id
@@ -60,15 +60,13 @@ class MessageHandler {
 		request
 			.get(`https://graph.facebook.com/v2.9/${senderId}`)
 			.query({fields: 'first_name,last_name'})
-			.end((err) => {
+			.end((err, res) => {
 				if (err) {
 					console.error(err)
 				} else {
-					// const {first_name, last_name} = req
-					//
-					// this.pushUserToDB(senderId, first_name, last_name)
+					const {first_name, last_name} = res
 
-					console.log('test')
+					this.pushUserToDB(senderId, first_name, last_name)
 				}
 			})
 

@@ -28,7 +28,8 @@ router
 		const job = {
 			type: 'messenger-messages',
 			payload: {
-				messagingEvents: ctx.request.body.entry[0].messaging
+				messagingEvents: ctx.request.body.entry[0].messaging,
+				body: ctx.request.body
 			}
 		}
 
