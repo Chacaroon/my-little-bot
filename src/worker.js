@@ -30,11 +30,13 @@ class MessageHandler {
 			const sender = event.sender.id
 			const text   = event.message.text.trim().substring(0, 200)
 			this.sendMessage(sender, {
-				text: 'Text received, echo: ' + text
+				text: `Text received: ${text}
+				Sender id: ${sender}`
 			})
 		})
 
-		console.log(payload)
+		console.dir(event.sender) //eslint-disable-line
+
 		cb('success')
 	}
 }

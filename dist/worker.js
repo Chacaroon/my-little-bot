@@ -44,11 +44,12 @@ var MessageHandler = function () {
 				var sender = event.sender.id;
 				var text = event.message.text.trim().substring(0, 200);
 				_this.sendMessage(sender, {
-					text: 'Text received, echo: ' + text
+					text: 'Text received: ' + text + '\n\t\t\t\tSender id: ' + sender
 				});
 			});
 
-			console.log(payload);
+			console.dir(event.sender); //eslint-disable-line
+
 			cb('success');
 		}
 	}]);
