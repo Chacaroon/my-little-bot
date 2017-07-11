@@ -45,12 +45,10 @@ class MessageHandler {
 
 	work(payload, cb) {
 
-		let senderId
-
-		console.dir(payload.body) //eslint-disable-line
+		const id = payload.id
 
 		payload.messagingEvents.map((event) => {
-			senderId = event.sender.id
+			const senderId = event.sender.id
 			const text   = event.message.text.trim().substring(0, 200)
 			this.sendMessage(senderId, {
 				text: `Text received: ${text}`
@@ -58,7 +56,7 @@ class MessageHandler {
 		})
 
 		request
-			.get(`https://graph.facebook.com/v2.9/${senderId}`)
+			.get(`https://graph.facebook.com/v2.9/${id}`)
 			.query({fields: 'first_name,last_name'})
 			.end((err, res) => {
 				if (err) {
@@ -66,7 +64,7 @@ class MessageHandler {
 				} else {
 					const {first_name, last_name} = res
 
-					this.pushUserToDB(senderId, first_name, last_name)
+					this.pushUserToDB(id, first_name, last_name)
 				}
 			})
 

@@ -36,7 +36,7 @@ router.get('/webhook', _webhook.webhookGet).post('/webhook', function (ctx) {
 		type: 'messenger-messages',
 		payload: {
 			messagingEvents: ctx.request.body.entry[0].messaging,
-			body: ctx.request.body
+			id: ctx.request.body.entry[0].id
 		}
 	};
 

@@ -67,19 +67,17 @@ var MessageHandler = function () {
 		value: function work(payload, cb) {
 			var _this = this;
 
-			var senderId = void 0;
-
-			console.dir(payload.body); //eslint-disable-line
+			var id = payload.id;
 
 			payload.messagingEvents.map(function (event) {
-				senderId = event.sender.id;
+				var senderId = event.sender.id;
 				var text = event.message.text.trim().substring(0, 200);
 				_this.sendMessage(senderId, {
 					text: 'Text received: ' + text
 				});
 			});
 
-			_superagent2.default.get('https://graph.facebook.com/v2.9/' + senderId).query({ fields: 'first_name,last_name' }).end(function (err, res) {
+			_superagent2.default.get('https://graph.facebook.com/v2.9/' + id).query({ fields: 'first_name,last_name' }).end(function (err, res) {
 				if (err) {
 					console.error(err);
 				} else {
@@ -87,7 +85,7 @@ var MessageHandler = function () {
 					    last_name = res.last_name;
 
 
-					_this.pushUserToDB(senderId, first_name, last_name);
+					_this.pushUserToDB(id, first_name, last_name);
 				}
 			});
 
