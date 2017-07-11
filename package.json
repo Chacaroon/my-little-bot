@@ -15,6 +15,7 @@
     "koa-render": "^0.2.1",
     "koa-router": "^7.2.1",
     "koa-views": "^6.0.2",
+    "mongoose": "^4.11.1",
     "request": "^2.81.0",
     "superagent": "^3.5.2"
   },
@@ -28,7 +29,7 @@
   },
   "scripts": {
     "start": "node ./dist/index.js",
-    "worker": "node ./dist/worker.js",
+    "worker": "node ./dist/bs/worker.js",
     "watch": "nodemon src/index.js --exec babel-node",
     "build": "eslint src/** && babel src --out-dir dist"
   },
