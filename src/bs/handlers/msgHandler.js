@@ -45,28 +45,30 @@ class MessageHandler {
 
 	work(payload, cb) {
 
-		const id = payload.id
-
 		payload.messagingEvents.map((event) => {
 			const senderId = event.sender.id
 			const text   = event.message.text.trim().substring(0, 200)
 			this.sendMessage(senderId, {
 				text: `Text received: ${text}`
 			})
+
+			console.log(senderId)
 		})
 
-		request
-			.get(`https://graph.facebook.com/v2.9/${id}`)
-			.query({fields: 'first_name,last_name'})
-			.end((err, res) => {
-				if (err) {
-					console.error(err)
-				} else {
-					const {first_name, last_name} = res
-
-					this.pushUserToDB(id, first_name, last_name)
-				}
-			})
+		// const id = payload.id
+		//
+		// request
+		// 	.get(`https://graph.facebook.com/v2.9/${id}`)
+		// 	.query({fields: 'first_name,last_name'})
+		// 	.end((err, res) => {
+		// 		if (err) {
+		// 			console.error(err)
+		// 		} else {
+		// 			const {first_name, last_name} = res
+		//
+		// 			this.pushUserToDB(id, first_name, last_name)
+		// 		}
+		// 	})
 
 		cb('success')
 	}
