@@ -3,20 +3,18 @@ import {client as Client} from 'fivebeans'
 import {webhookGet} from './webhook'
 
 const router = new Router()
-const client = new Client('localhost', 11300)
+const client = new Client('91.92.136.201', 11300)
 
 client
-	.on('connect', () => {
-		client.use('messenger-messages', function(err, tubeName){
-			if (err) {
-				console.error(err)
-			} else {
-				console.log(`Used ${tubeName}`)
-			}
+	.on('connect', function(){
+		client.use('messenger-messages', (err, tubeName) => {
+
+			if (err) console.error(err)
+
+			console.log(`Used ${tubeName}`)
 		})
-	})
-	.on('error', (err) => {
-		console.error(err)
+	}).on('error', (err) => {
+		console.log(err)
 	})
 	.on('close', () => {
 		console.log('...Closing the tube...')
@@ -34,7 +32,9 @@ router
 			}
 		}
 
-		client.put(0, 0, 60, JSON.stringify(['messenger-messages', job]))
+		client.put(0, 0, 60, JSON.stringify(['messenger-messages', job]), (err) => {
+			if (err) console.error(err)
+		})
 	})
 
 export default router
