@@ -6,6 +6,7 @@ import UserModel from '../../db/models/userModel'
 class MessageHandler {
 	constructor() {
 		this.type = 'messenger-messages'
+		this.senderId = ''
 	}
 
 	sendMessage(sender, message) {
@@ -52,7 +53,13 @@ class MessageHandler {
 				})
 
 				connection.collection('user').save(user, (err) => {
-					console.error(err)
+					if (err) {
+						console.error(err)
+					} else {
+						this.sendMessage(this.senderId, {
+							text: `${first_name} ${last_name} added to DB`
+						})
+					}
 				})
 			}
 		})
@@ -61,7 +68,7 @@ class MessageHandler {
 	work(payload, cb) {
 
 		payload.messagingEvents.map((event) => {
-			const senderId = event.sender.id
+			this.senderId = event.sender.id
 			const text   = event.message.text.trim()
 
 			switch (text) {
@@ -71,7 +78,7 @@ class MessageHandler {
 				break
 			}
 			default: {
-				this.sendMessage(senderId, {
+				this.sendMessage(this.senderId, {
 					text: `Text received: ${text}`
 				})
 			}

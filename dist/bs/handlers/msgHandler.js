@@ -27,6 +27,7 @@ var MessageHandler = function () {
 		_classCallCheck(this, MessageHandler);
 
 		this.type = 'messenger-messages';
+		this.senderId = '';
 	}
 
 	_createClass(MessageHandler, [{
@@ -46,6 +47,7 @@ var MessageHandler = function () {
 	}, {
 		key: 'pushUserToDB',
 		value: function pushUserToDB(id) {
+			var _this = this;
 
 			var first_name = void 0,
 			    last_name = void 0;
@@ -70,7 +72,13 @@ var MessageHandler = function () {
 					});
 
 					_mongoose.connection.collection('user').save(_user, function (err) {
-						console.error(err);
+						if (err) {
+							console.error(err);
+						} else {
+							_this.sendMessage(_this.senderId, {
+								text: first_name + ' ' + last_name + ' added to DB'
+							});
+						}
 					});
 				}
 			});
@@ -78,22 +86,22 @@ var MessageHandler = function () {
 	}, {
 		key: 'work',
 		value: function work(payload, cb) {
-			var _this = this;
+			var _this2 = this;
 
 			payload.messagingEvents.map(function (event) {
-				var senderId = event.sender.id;
+				_this2.senderId = event.sender.id;
 				var text = event.message.text.trim();
 
 				switch (text) {
 					case /\/add \d+/:
 						{
 							var id = text.split(' ')[1];
-							_this.pushUserToDB(id);
+							_this2.pushUserToDB(id);
 							break;
 						}
 					default:
 						{
-							_this.sendMessage(senderId, {
+							_this2.sendMessage(_this2.senderId, {
 								text: 'Text received: ' + text
 							});
 						}
