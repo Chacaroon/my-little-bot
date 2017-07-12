@@ -42,11 +42,11 @@ class MessageHandler {
 				access_token: access_token})
 			.end((err, res) => { // Response handler
 				if (err) {
-					this.sendMessage(`User with id ${id} not found`)
+					console.error(err)
 				} else {
 
 					const text = JSON.parse(res.text)
-					console.log(res.text)
+					console.log(text)
 					first_name = text.first_name
 					last_name = text.last_name
 				}
