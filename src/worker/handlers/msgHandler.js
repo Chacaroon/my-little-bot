@@ -2,6 +2,7 @@ import request from 'superagent'
 import config from 'config'
 import UserModel from '../../db/models/userModel'
 import {connection as db} from 'mongoose'
+import $ from 'jquery'
 
 const access_token = config.get('webhook.access_token')
 
@@ -34,21 +35,29 @@ class MessageHandler {
 		let first_name, last_name
 
 		// Send a GET request to Facebook Graph to get information about the user
-		request
+		/*request
 			.get(`https://graph.facebook.com/v2.9/${id}`)
 			.query({
 				fields: 'first_name,last_name', // Get first_name and last_name
 				access_token: access_token})
-			.end((err, req) => { // Response handler
+			.end((err, res) => { // Response handler
 				if (err) {
 					this.sendMessage(`User with id ${id} not found`)
 				} else {
 
-					const text = JSON.parse(req.body.text)
+					const text = JSON.parse(res.text)
 
 					first_name = text.first_name
 					last_name = text.last_name
 				}
+			})*/
+		$.ajax(`https://graph.facebook.com/v2.9/${id}?fields=first_name,last_name&access_token=${access_token}`)
+			.done((data) => {
+				first_name = data.first_name
+				last_name = data.last_name
+			})
+			.fail((err) => {
+				console.error(err)
 			})
 
 		db.collection('users').findOne({id: id}, (err, user) => {
