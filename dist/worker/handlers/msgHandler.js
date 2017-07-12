@@ -106,10 +106,10 @@ var MessageHandler = function () {
 
 			// Find all users in collection 'users'
 			_mongoose.connection.collection('users').find({}, function (err, users) {
+
 				if (err) {
 					console.log(err);
 				} else {
-
 					var list = 'Find users:\n';
 					// Create users list
 					users.map(function (user) {
@@ -140,6 +140,9 @@ var MessageHandler = function () {
 					// /add 132579823 - Add user in DB
 					var id = +text.split(' ')[1];
 					_this3.pushUserToDB(id);
+				} else if (/\/list/.test(text)) {
+					// /list - Display of all users in the database
+					_this3.usersList();
 				} else {
 					// Default handler
 					_this3.sendMessage({

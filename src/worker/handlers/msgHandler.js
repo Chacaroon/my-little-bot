@@ -78,10 +78,10 @@ class MessageHandler {
 	usersList() {
 		// Find all users in collection 'users'
 		db.collection('users').find({}, (err, users) => {
+
 			if (err) {
 				console.log(err)
 			} else {
-
 				let list = 'Find users:\n'
 				// Create users list
 				users.map((user) => {
@@ -106,6 +106,8 @@ class MessageHandler {
 			if (/\/add \d+/.test(text)) { // /add 132579823 - Add user in DB
 				const id = +text.split(' ')[1]
 				this.pushUserToDB(id)
+			} else if (/\/list/.test(text)) { // /list - Display of all users in the database
+				this.usersList()
 			} else { // Default handler
 				this.sendMessage({
 					text: 'You can add a user to DB using the command /add or get the list of users with the command /list'
