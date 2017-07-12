@@ -2,6 +2,12 @@
 
 var _fivebeans = require('fivebeans');
 
+var _mongoose = require('mongoose');
+
+var _mongoose2 = _interopRequireDefault(_mongoose);
+
+var _constants = require('../constants');
+
 var _msgHandler = require('./handlers/msgHandler');
 
 var _msgHandler2 = _interopRequireDefault(_msgHandler);
@@ -18,4 +24,18 @@ var worker = new _fivebeans.worker({
 	ignoreDefault: true
 });
 
-worker.start(['messenger-messages']);
+_mongoose2.default.connect(_constants.dbhost, {
+	useMongoClient: true
+});
+
+var db = _mongoose2.default.connection;
+
+db.on('error', function (err) {
+	console.error(err);
+});
+
+db.once('open', function () {
+	console.log('DB connected!');
+
+	worker.start(['messenger-messages']);
+});

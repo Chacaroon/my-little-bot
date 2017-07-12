@@ -12,13 +12,11 @@ var _superagent2 = _interopRequireDefault(_superagent);
 
 var _constants = require('../../constants');
 
-var _index = require('../../db/index');
-
-var _index2 = _interopRequireDefault(_index);
-
 var _userModel = require('../../db/models/userModel');
 
 var _userModel2 = _interopRequireDefault(_userModel);
+
+var _mongoose = require('mongoose');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -34,10 +32,10 @@ var MessageHandler = function () {
 
 	_createClass(MessageHandler, [{
 		key: 'sendMessage',
-		value: function sendMessage(sender, message) {
+		value: function sendMessage(message) {
 			_superagent2.default.post('https://graph.facebook.com/v2.9/me/messages').query({ access_token: _constants.access_token }).send({
 				recipient: {
-					id: sender
+					id: this.senderId
 				},
 				message: message
 			}).end(function (err) {
@@ -60,12 +58,13 @@ var MessageHandler = function () {
 				if (err) {
 					console.error(err);
 				} else {
+					console.log(req);
 					first_name = req.first_name;
 					last_name = req.last_name;
 				}
 			});
 
-			_index2.default.collection('users').findOne({ id: id }, function (err, user) {
+			_mongoose.connection.collection('users').findOne({ id: id }, function (err, user) {
 				if (err) {
 					console.error(err);
 				} else if (!user) {
@@ -75,14 +74,18 @@ var MessageHandler = function () {
 						last_name: last_name
 					});
 
-					_index2.default.collection('user').save(_user, function (err) {
+					_mongoose.connection.collection('users').save(_user, function (err) {
 						if (err) {
 							console.error(err);
 						} else {
-							_this.sendMessage(_this.senderId, {
+							_this.sendMessage({
 								text: first_name + ' ' + last_name + ' added to DB'
 							});
 						}
+					});
+				} else {
+					_this.sendMessage({
+						text: 'User with id ' + id + ' already added'
 					});
 				}
 			});
@@ -100,9 +103,11 @@ var MessageHandler = function () {
 
 					var id = +text.split(' ')[1];
 
+					console.log(id);
+
 					_this2.pushUserToDB(id);
 				} else {
-					_this2.sendMessage(_this2.senderId, {
+					_this2.sendMessage({
 						text: 'You can add a user to DB using the command /add'
 					});
 				}

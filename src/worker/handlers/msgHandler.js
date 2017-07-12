@@ -1,7 +1,7 @@
 import request from 'superagent'
 import {access_token} from '../../constants'
-import connection from '../../db/index'
 import UserModel from '../../db/models/userModel'
+import {connection as db} from 'mongoose'
 
 class MessageHandler {
 	constructor() {
@@ -9,13 +9,13 @@ class MessageHandler {
 		this.senderId = ''
 	}
 
-	sendMessage(sender, message) {
+	sendMessage(message) {
 		request
 			.post('https://graph.facebook.com/v2.9/me/messages')
 			.query({access_token: access_token})
 			.send({
 				recipient: {
-					id: sender
+					id: this.senderId
 				},
 				message: message
 			})
@@ -39,12 +39,13 @@ class MessageHandler {
 				if (err) {
 					console.error(err)
 				} else {
+					console.log(req)
 					first_name = req.first_name
 					last_name = req.last_name
 				}
 			})
 
-		connection.collection('users').findOne({id: id}, (err, user) => {
+		db.collection('users').findOne({id: id}, (err, user) => {
 			if (err) {
 				console.error(err)
 			} else if (!user) {
@@ -54,14 +55,18 @@ class MessageHandler {
 					last_name: last_name
 				})
 
-				connection.collection('user').save(user, (err) => {
+				db.collection('users').save(user, (err) => {
 					if (err) {
 						console.error(err)
 					} else {
-						this.sendMessage(this.senderId, {
+						this.sendMessage({
 							text: `${first_name} ${last_name} added to DB`
 						})
 					}
+				})
+			} else {
+				this.sendMessage({
+					text: `User with id ${id} already added`
 				})
 			}
 		})
@@ -77,9 +82,11 @@ class MessageHandler {
 
 				const id = +text.split(' ')[1]
 
+				console.log(id)
+
 				this.pushUserToDB(id)
 			} else {
-				this.sendMessage(this.senderId, {
+				this.sendMessage({
 					text: 'You can add a user to DB using the command /add'
 				})
 			}
