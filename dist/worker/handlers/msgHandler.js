@@ -71,7 +71,7 @@ var MessageHandler = function () {
 				} else {
 
 					var text = JSON.parse(res.text);
-
+					console.log(res.text);
 					first_name = text.first_name;
 					last_name = text.last_name;
 				}
