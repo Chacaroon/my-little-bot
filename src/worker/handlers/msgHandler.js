@@ -2,7 +2,6 @@ import request from 'superagent'
 import config from 'config'
 import UserModel from '../../db/models/userModel'
 import {connection as db} from 'mongoose'
-// import $ from 'jquery'
 
 const access_token = config.get('webhook.access_token')
 
@@ -32,8 +31,6 @@ class MessageHandler {
 
 	pushUserToDB(id) {
 
-		let first_name, last_name
-
 		// Send a GET request to Facebook Graph to get information about the user
 		request
 			.get(`https://graph.facebook.com/v2.9/${id}`)
@@ -44,48 +41,38 @@ class MessageHandler {
 				if (err) {
 					console.error(err)
 				} else {
+					const text = JSON.parse(res.text) // Get user fields from res string
+					const first_name = text.first_name
+					const last_name = text.last_name
 
-					const text = JSON.parse(res.text)
-					console.log(text)
-					first_name = text.first_name
-					last_name = text.last_name
+					db.collection('users').findOne({id: id}, (err, user) => {
+						if (err) {
+							console.error(err)
+						} else if (!user) { // If the user is not found, add a new one
+							const user = new UserModel({ // Create new user
+								id: id,
+								first_name: first_name,
+								last_name: last_name
+							})
+
+							// Push user in collection 'users'
+							db.collection('users').save(user, (err) => {
+								if (err) {
+									console.error(err)
+								} else {
+									this.sendMessage({
+										text: `${first_name} ${last_name} added to DB`
+									})
+								}
+							})
+						} else { // In case the user is found to report this
+							this.sendMessage({
+								text: `${first_name} ${last_name} already added`
+							})
+						}
+					})
 				}
 			})
-		/*$.ajax(`https://graph.facebook.com/v2.9/${id}?fields=first_name,last_name&access_token=${access_token}`)
-			.done((data) => {
-				first_name = data.first_name
-				last_name = data.last_name
-			})
-			.fail((err) => {
-				console.error(err)
-			})*/
-
-		db.collection('users').findOne({id: id}, (err, user) => {
-			if (err) {
-				console.error(err)
-			} else if (!user) { // If the user is not found, add a new one
-				const user = new UserModel({
-					id: id,
-					first_name: first_name,
-					last_name: last_name
-				})
-
-				// Push user in collection 'users'
-				db.collection('users').save(user, (err) => {
-					if (err) {
-						console.error(err)
-					} else {
-						this.sendMessage({
-							text: `${first_name} ${last_name} added to DB`
-						})
-					}
-				})
-			} else { // In case the user is found to report this
-				this.sendMessage({
-					text: `${first_name} ${last_name} already added`
-				})
-			}
-		})
 	}
 
 	usersList() {

@@ -24,8 +24,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-// import $ from 'jquery'
-
 var access_token = _config2.default.get('webhook.access_token');
 
 var MessageHandler = function () {
@@ -58,9 +56,6 @@ var MessageHandler = function () {
 		value: function pushUserToDB(id) {
 			var _this = this;
 
-			var first_name = void 0,
-			    last_name = void 0;
-
 			// Send a GET request to Facebook Graph to get information about the user
 			_superagent2.default.get('https://graph.facebook.com/v2.9/' + id).query({
 				fields: 'first_name,last_name', // Get first_name and last_name
@@ -69,47 +64,37 @@ var MessageHandler = function () {
 				if (err) {
 					console.error(err);
 				} else {
+					var text = JSON.parse(res.text); // Get user fields from res string
+					var first_name = text.first_name;
+					var last_name = text.last_name;
 
-					var text = JSON.parse(res.text);
-					console.log(text);
-					first_name = text.first_name;
-					last_name = text.last_name;
-				}
-			});
-			/*$.ajax(`https://graph.facebook.com/v2.9/${id}?fields=first_name,last_name&access_token=${access_token}`)
-   	.done((data) => {
-   		first_name = data.first_name
-   		last_name = data.last_name
-   	})
-   	.fail((err) => {
-   		console.error(err)
-   	})*/
-
-			_mongoose.connection.collection('users').findOne({ id: id }, function (err, user) {
-				if (err) {
-					console.error(err);
-				} else if (!user) {
-					// If the user is not found, add a new one
-					var _user = new _userModel2.default({
-						id: id,
-						first_name: first_name,
-						last_name: last_name
-					});
-
-					// Push user in collection 'users'
-					_mongoose.connection.collection('users').save(_user, function (err) {
+					_mongoose.connection.collection('users').findOne({ id: id }, function (err, user) {
 						if (err) {
 							console.error(err);
+						} else if (!user) {
+							// If the user is not found, add a new one
+							var _user = new _userModel2.default({ // Create new user
+								id: id,
+								first_name: first_name,
+								last_name: last_name
+							});
+
+							// Push user in collection 'users'
+							_mongoose.connection.collection('users').save(_user, function (err) {
+								if (err) {
+									console.error(err);
+								} else {
+									_this.sendMessage({
+										text: first_name + ' ' + last_name + ' added to DB'
+									});
+								}
+							});
 						} else {
+							// In case the user is found to report this
 							_this.sendMessage({
-								text: first_name + ' ' + last_name + ' added to DB'
+								text: first_name + ' ' + last_name + ' already added'
 							});
 						}
-					});
-				} else {
-					// In case the user is found to report this
-					_this.sendMessage({
-						text: first_name + ' ' + last_name + ' already added'
 					});
 				}
 			});
