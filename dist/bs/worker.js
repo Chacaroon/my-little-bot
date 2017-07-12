@@ -6,6 +6,8 @@ var _msgHandler = require('./handlers/msgHandler');
 
 var _msgHandler2 = _interopRequireDefault(_msgHandler);
 
+require('../db/index');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var worker = new _fivebeans.worker({
