@@ -39,7 +39,9 @@ class MessageHandler {
 				access_token: access_token})
 			.end((err, res) => { // Response handler
 				if (err) {
-					console.error(err)
+					this.sendMessage({
+						text: `User with ID ${id} not found`
+					})
 				} else {
 					const text = JSON.parse(res.text) // Get user fields from res string
 					const first_name = text.first_name
