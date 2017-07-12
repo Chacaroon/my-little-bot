@@ -1,16 +1,18 @@
 import mongoose from 'mongoose'
 
-import {db} from '../constants'
+import {dbhost} from '../constants'
 
-export default (function () {
+let db
 
-	const connection = mongoose.createConnection(db)
+(function () {
 
-	connection.on('error', function (err) {
-		console.error('connection error:', err.message)
-	})
+	mongoose.mongo.MongoClient.connect(dbhost, (err, conn) => {
+		if (err) throw err
 
-	connection.once('open', function callback() {
-		console.log('Connected to DB!')
+		db = conn
+
+		console.log('DB connected')
 	})
 })()
+
+export default db

@@ -1,2 +1,2 @@
 export const access_token = 'EAAGZB1XwCVe4BAGZAjRVOSwhb5lfZCcMZC2RuzZAu9RMkcZAcFDIu83VcOVsyi6Ajq3yBZC5aqDTIZCzDGYnTeR8LtncJ35nqZCmLCKfrKZBiMMJZAgj96SHsfaMKvVT0sOjp2ZATKP1NHWWFgAsz8jZCWPUW359Lc1NAvaHHTZBcEYnvLbAZDZD'
-export const db = 'mongodb://Chacaroon:Ukrnet299812@ds153652.mlab.com:53652/heroku_zlzj16qd'
+export const dbhost = 'mongodb://ds153652.mlab.com:53652'

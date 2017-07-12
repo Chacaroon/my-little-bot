@@ -1,6 +1,6 @@
 import request from 'superagent'
 import {access_token} from '../../constants'
-import {connection} from 'mongoose'
+import connection from '../../db/index'
 import UserModel from '../../db/models/userModel'
 
 class MessageHandler {

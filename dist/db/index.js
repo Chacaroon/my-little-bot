@@ -12,15 +12,17 @@ var _constants = require('../constants');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = function () {
+var db = void 0;
 
-	var connection = _mongoose2.default.createConnection(_constants.db);
+(function () {
 
-	connection.on('error', function (err) {
-		console.error('connection error:', err.message);
+	_mongoose2.default.mongo.MongoClient.connect(_constants.dbhost, function (err, conn) {
+		if (err) throw err;
+
+		db = conn;
+
+		console.log('DB connected');
 	});
+})();
 
-	connection.once('open', function callback() {
-		console.log('Connected to DB!');
-	});
-}();
+exports.default = db;

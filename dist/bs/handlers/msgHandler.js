@@ -12,7 +12,9 @@ var _superagent2 = _interopRequireDefault(_superagent);
 
 var _constants = require('../../constants');
 
-var _mongoose = require('mongoose');
+var _index = require('../../db/index');
+
+var _index2 = _interopRequireDefault(_index);
 
 var _userModel = require('../../db/models/userModel');
 
@@ -63,7 +65,7 @@ var MessageHandler = function () {
 				}
 			});
 
-			_mongoose.connection.collection('users').findOne({ id: id }, function (err, user) {
+			_index2.default.collection('users').findOne({ id: id }, function (err, user) {
 				if (err) {
 					console.error(err);
 				} else if (!user) {
@@ -73,7 +75,7 @@ var MessageHandler = function () {
 						last_name: last_name
 					});
 
-					_mongoose.connection.collection('user').save(_user, function (err) {
+					_index2.default.collection('user').save(_user, function (err) {
 						if (err) {
 							console.error(err);
 						} else {
