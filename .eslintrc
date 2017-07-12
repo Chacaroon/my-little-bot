@@ -6,6 +6,9 @@
   },
   "extends": "eslint:recommended",
   "parser": "babel-eslint",
+  "plugins": [
+    "json"
+  ],
   "parserOptions": {
     "sourceType": "module"
   },
