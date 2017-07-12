@@ -20,13 +20,11 @@ var _userModel2 = _interopRequireDefault(_userModel);
 
 var _mongoose = require('mongoose');
 
-var _jquery = require('jquery');
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+// import $ from 'jquery'
 
 var access_token = _config2.default.get('webhook.access_token');
 
@@ -64,26 +62,28 @@ var MessageHandler = function () {
 			    last_name = void 0;
 
 			// Send a GET request to Facebook Graph to get information about the user
-			/*request
-   	.get(`https://graph.facebook.com/v2.9/${id}`)
-   	.query({
-   		fields: 'first_name,last_name', // Get first_name and last_name
-   		access_token: access_token})
-   	.end((err, res) => { // Response handler
-   		if (err) {
-   			this.sendMessage(`User with id ${id} not found`)
-   		} else {
-   					const text = JSON.parse(res.text)
-   					first_name = text.first_name
-   			last_name = text.last_name
-   		}
-   	})*/
-			_jquery2.default.ajax('https://graph.facebook.com/v2.9/' + id + '?fields=first_name,last_name&access_token=' + access_token).done(function (data) {
-				first_name = data.first_name;
-				last_name = data.last_name;
-			}).fail(function (err) {
-				console.error(err);
+			_superagent2.default.get('https://graph.facebook.com/v2.9/' + id).query({
+				fields: 'first_name,last_name', // Get first_name and last_name
+				access_token: access_token }).end(function (err, res) {
+				// Response handler
+				if (err) {
+					_this.sendMessage('User with id ' + id + ' not found');
+				} else {
+
+					var text = JSON.parse(res.text);
+
+					first_name = text.first_name;
+					last_name = text.last_name;
+				}
 			});
+			/*$.ajax(`https://graph.facebook.com/v2.9/${id}?fields=first_name,last_name&access_token=${access_token}`)
+   	.done((data) => {
+   		first_name = data.first_name
+   		last_name = data.last_name
+   	})
+   	.fail((err) => {
+   		console.error(err)
+   	})*/
 
 			_mongoose.connection.collection('users').findOne({ id: id }, function (err, user) {
 				if (err) {
