@@ -68,7 +68,7 @@ var MessageHandler = function () {
 					_this.sendMessage('User with id ' + id + ' not found');
 				} else {
 
-					var text = JSON.parse(req.text);
+					var text = JSON.parse(req.body.text);
 
 					first_name = text.first_name;
 					last_name = text.last_name;

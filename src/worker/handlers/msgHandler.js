@@ -44,7 +44,7 @@ class MessageHandler {
 					this.sendMessage(`User with id ${id} not found`)
 				} else {
 
-					const text = JSON.parse(req.text)
+					const text = JSON.parse(req.body.text)
 
 					first_name = text.first_name
 					last_name = text.last_name
