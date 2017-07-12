@@ -52,7 +52,9 @@ var MessageHandler = function () {
 			var first_name = void 0,
 			    last_name = void 0;
 
-			_superagent2.default.get('https://graph.facebook.com/v2.9/' + id).query({ fields: 'first_name,last_name' }).end(function (err, req) {
+			_superagent2.default.get('https://graph.facebook.com/v2.9/' + id).query({
+				fields: 'first_name,last_name',
+				access_token: _constants.access_token }).end(function (err, req) {
 				if (err) {
 					console.error(err);
 				} else {

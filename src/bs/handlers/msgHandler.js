@@ -32,7 +32,9 @@ class MessageHandler {
 
 		request
 			.get(`https://graph.facebook.com/v2.9/${id}`)
-			.query({fields: 'first_name,last_name'})
+			.query({
+				fields: 'first_name,last_name',
+				access_token: access_token})
 			.end((err, req) => {
 				if (err) {
 					console.error(err)
