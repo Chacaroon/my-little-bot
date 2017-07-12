@@ -99,54 +99,28 @@ var MessageHandler = function () {
 				}
 			});
 		}
-	}, {
-		key: 'usersList',
-		value: function usersList() {
-			var _this2 = this;
-
-			// Find all users in collection 'users'
-			_mongoose.connection.collection('users').find({}, function (err, users) {
-
-				if (err) {
-					console.log(err);
-				} else {
-					var list = 'Find users:\n';
-					// Create users list
-					users.map(function (user) {
-						list += user.first_name + ' ' + user.last_name + ' with ID ' + user.id + '\n';
-					});
-
-					_this2.sendMessage({
-						text: list
-					});
-				}
-			});
-		}
 
 		// Queue in pipe handler
 
 	}, {
 		key: 'work',
 		value: function work(payload, cb) {
-			var _this3 = this;
+			var _this2 = this;
 
 			// Passing through multiple events and processing each event
 			payload.messagingEvents.map(function (event) {
-				_this3.senderId = event.sender.id; // ID of the user who sent the message
+				_this2.senderId = event.sender.id; // ID of the user who sent the message
 				var text = event.message.text; // Message text
 
 				// Commands handler
 				if (/\/add \d+/.test(text)) {
 					// /add 132579823 - Add user in DB
 					var id = +text.split(' ')[1];
-					_this3.pushUserToDB(id);
-				} else if (/\/list/.test(text)) {
-					// /list - Display of all users in the database
-					_this3.usersList();
+					_this2.pushUserToDB(id);
 				} else {
 					// Default handler
-					_this3.sendMessage({
-						text: 'You can add a user to DB using the command /add or get the list of users with the command /list'
+					_this2.sendMessage({
+						text: 'You can add a user to DB using the command /add'
 					});
 				}
 			});
