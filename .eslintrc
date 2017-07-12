@@ -12,7 +12,10 @@
   "rules": {
     "indent": [
       "error",
-      "tab"
+      "tab",
+      {
+        "SwitchCase": 1
+      }
     ],
     "strict": 0,
     "linebreak-style": [

@@ -69,19 +69,17 @@ class MessageHandler {
 
 		payload.messagingEvents.map((event) => {
 			this.senderId = event.sender.id
-			const text   = event.message.text.trim()
+			const text = event.message.text
 
-			switch (text) {
-			case /\/add \d+/: {
-				const id = text.split(' ')[1]
+			if (/\/add \d+/.test(text)) {
+
+				const id = +text.split(' ')[1]
+
 				this.pushUserToDB(id)
-				break
-			}
-			default: {
+			} else {
 				this.sendMessage(this.senderId, {
-					text: `Text received: ${text}`
+					text: 'You can add a user to DB using the command /add'
 				})
-			}
 			}
 		})
 

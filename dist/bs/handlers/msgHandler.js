@@ -90,21 +90,17 @@ var MessageHandler = function () {
 
 			payload.messagingEvents.map(function (event) {
 				_this2.senderId = event.sender.id;
-				var text = event.message.text.trim();
+				var text = event.message.text;
 
-				switch (text) {
-					case /\/add \d+/:
-						{
-							var id = text.split(' ')[1];
-							_this2.pushUserToDB(id);
-							break;
-						}
-					default:
-						{
-							_this2.sendMessage(_this2.senderId, {
-								text: 'Text received: ' + text
-							});
-						}
+				if (/\/add \d+/.test(text)) {
+
+					var id = +text.split(' ')[1];
+
+					_this2.pushUserToDB(id);
+				} else {
+					_this2.sendMessage(_this2.senderId, {
+						text: 'You can add a user to DB using the command /add'
+					});
 				}
 			});
 
