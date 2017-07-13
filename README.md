@@ -2,7 +2,7 @@
 
 `npm run build` - Build a production version
 
-`npm run start` - Start a bot
+`npm start` - Start a bot
 
 `npm run worker` - Start a beanstalkd worker
  
