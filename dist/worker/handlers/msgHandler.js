@@ -62,7 +62,9 @@ var MessageHandler = function () {
 				access_token: access_token }).end(function (err, res) {
 				// Response handler
 				if (err) {
-					console.error(err);
+					_this.sendMessage({
+						text: 'User with id ' + id + ' not found'
+					});
 				} else {
 					var text = JSON.parse(res.text); // Get user fields from res string
 					var first_name = text.first_name;
